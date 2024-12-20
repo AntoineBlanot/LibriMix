@@ -1,10 +1,10 @@
 #!/bin/bash
 set -eu  # Exit on error
 
-storage_dir=$1
+storage_dir=$1	# Your datasets dir
 librispeech_dir=$storage_dir/LibriSpeech
 wham_dir=$storage_dir/wham_noise
-librimix_outdir=$storage_dir/
+librimix_outdir=$storage_dir/LibriMix
 
 function LibriSpeech_dev_clean() {
 	if ! test -e $librispeech_dir/dev-clean; then
@@ -12,7 +12,7 @@ function LibriSpeech_dev_clean() {
 		# If downloading stalls for more than 20s, relaunch from previous state.
 		wget -c --tries=0 --read-timeout=20 http://www.openslr.org/resources/12/dev-clean.tar.gz -P $storage_dir
 		tar -xzf $storage_dir/dev-clean.tar.gz -C $storage_dir
-		rm -rf $storage_dir/dev-clean.tar.gz
+		# rm -rf $storage_dir/dev-clean.tar.gz
 	fi
 }
 
@@ -22,7 +22,7 @@ function LibriSpeech_test_clean() {
 		# If downloading stalls for more than 20s, relaunch from previous state.
 		wget -c --tries=0 --read-timeout=20 http://www.openslr.org/resources/12/test-clean.tar.gz -P $storage_dir
 		tar -xzf $storage_dir/test-clean.tar.gz -C $storage_dir
-		rm -rf $storage_dir/test-clean.tar.gz
+		# rm -rf $storage_dir/test-clean.tar.gz
 	fi
 }
 
@@ -32,7 +32,7 @@ function LibriSpeech_clean100() {
 		# If downloading stalls for more than 20s, relaunch from previous state.
 		wget -c --tries=0 --read-timeout=20 http://www.openslr.org/resources/12/train-clean-100.tar.gz -P $storage_dir
 		tar -xzf $storage_dir/train-clean-100.tar.gz -C $storage_dir
-		rm -rf $storage_dir/train-clean-100.tar.gz
+		# rm -rf $storage_dir/train-clean-100.tar.gz
 	fi
 }
 
@@ -42,7 +42,7 @@ function LibriSpeech_clean360() {
 		# If downloading stalls for more than 20s, relaunch from previous state.
 		wget -c --tries=0 --read-timeout=20 http://www.openslr.org/resources/12/train-clean-360.tar.gz -P $storage_dir
 		tar -xzf $storage_dir/train-clean-360.tar.gz -C $storage_dir
-		rm -rf $storage_dir/train-clean-360.tar.gz
+		# rm -rf $storage_dir/train-clean-360.tar.gz
 	fi
 }
 
@@ -52,7 +52,7 @@ function wham() {
 		# If downloading stalls for more than 20s, relaunch from previous state.
 		wget -c --tries=0 --read-timeout=20 https://my-bucket-a8b4b49c25c811ee9a7e8bba05fa24c7.s3.amazonaws.com/wham_noise.zip -P $storage_dir
 		unzip -qn $storage_dir/wham_noise.zip -d $storage_dir
-		rm -rf $storage_dir/wham_noise.zip
+		# rm -rf $storage_dir/wham_noise.zip
 	fi
 }
 
@@ -77,7 +77,7 @@ for n_src in 2 3; do
     --metadata_dir $metadata_dir \
     --librimix_outdir $librimix_outdir \
     --n_src $n_src \
-    --freqs 8k 16k \
-    --modes min max \
+    --freqs 16k \
+    --modes max \
     --types mix_clean mix_both mix_single
 done

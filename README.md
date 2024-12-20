@@ -9,8 +9,10 @@ To generate LibriMix, clone the repo and run the main script :
 [`generate_librimix.sh`](./generate_librimix.sh)
 
 ```
-git clone https://github.com/JorisCos/LibriMix
-cd LibriMix 
+git clone https://github.com/AntoineBlanot/LibriMix.git
+cd LibriMix
+conda env create -f conda-env.yml
+conda activate librimix
 ./generate_librimix.sh storage_dir
 ```
 
@@ -23,7 +25,7 @@ conda install -c groakat sox
 
 For Linux :
 ```
-conda install -c conda-forge sox
+conda env create -f conda-env.yml
 ```
 
 You can either change `storage_dir` and `n_src` by hand in 
